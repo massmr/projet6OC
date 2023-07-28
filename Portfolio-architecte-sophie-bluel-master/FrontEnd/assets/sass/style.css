@@ -1,8 +1,39 @@
+@import 'fontawesome/fontawesome.css';
+footer nav ul {
+  display: flex;
+  justify-content: flex-end;
+  margin: 2em;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+
+nav li {
+  padding: 0 10px;
+  font-size: 1.2em;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  color: #B1663C;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
-@import 'fontawesome/fontawesome.css';
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -93,25 +124,6 @@ h2 {
   color: #1D6154;
 }
 
-nav ul {
-  display: flex;
-  align-items: center;
-  list-style-type: none;
-}
-
-nav li {
-  padding: 0 10px;
-  font-size: 1.2em;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-a:hover {
-  color: #B1663C;
-}
-
 #introduction {
   display: flex;
   align-items: center;
@@ -154,12 +166,6 @@ a:hover {
 
 .gallery img {
   width: 100%;
-}
-
-footer nav ul {
-  display: flex;
-  justify-content: flex-end;
-  margin: 2em;
 }
 
 .button_Container {
