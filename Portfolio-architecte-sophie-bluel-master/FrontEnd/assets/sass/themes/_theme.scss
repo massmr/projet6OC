@@ -84,24 +84,6 @@ h2{
   font-size: 30px;
   color: #1D6154
 }
-nav ul {
-  display: flex;
-  align-items: center;
-  list-style-type: none;
-
-}
-nav li {
-  padding: 0 10px;
-  font-size: 1.2em;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-  &:hover {
-    color: #B1663C;
-  }
-}
 
 #introduction {
   display: flex;
@@ -141,13 +123,5 @@ a {
 .gallery img {
   width: 100%;
 
-}
-
-
-
-footer nav ul {
-  display: flex;
-  justify-content: flex-end;
-  margin: 2em
 }
 
