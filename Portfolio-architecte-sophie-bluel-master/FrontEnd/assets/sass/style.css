@@ -104,7 +104,11 @@ nav li {
   font-size: 1.2em;
 }
 
-li:hover {
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
   color: #B1663C;
 }
 
