@@ -12,7 +12,10 @@ if (projects === null) {
 else {
     projects = JSON.parse(projects);
 }
+//counter to check if page was already charged
+let alreadyLogged = false;
 
+//first call
 createArticle(projects);
 
 //Create Projects elements
@@ -36,6 +39,13 @@ function createArticle(projects) {
         articleFigure.appendChild(figureImage);
         articleFigure.appendChild(figureCaption);
     }
+
+    if (alreadyLogged === false) {
+        const buttonActivated = document.getElementById("button1")
+        buttonActivated.classList.add("button_Selected");
+    }
+    alreadyLogged = true;
+
 }
 
 //filters :
@@ -47,15 +57,21 @@ const projectCategory = [];
 //create a filter function for each button
 for (let i = 1, numButton = 4; i < numButton + 1; ++i) {
     buttonId[i] = document.getElementById("button" + i);
+    //event listener on each button
+    buttonId[i].addEventListener("click", function () {
 
-    //event listener on button
-    buttonId[i].addEventListener("click", function (event) {
+        //Unselect every button /Select new button
+        for (let j = 1, numButton = 4; j < numButton + 1; ++j) {
+            buttonId[j].classList.remove("button_Selected");
+        }
+        buttonId[i].classList.add("button_Selected");
 
         //display all projects => invoke first function
         if (i === 1) {
             document.querySelector(".gallery").innerHTML = "";
             createArticle(projects);
         }
+
         //filter functions
         else {
             projectCategory[i] = projects.filter(function (e) {

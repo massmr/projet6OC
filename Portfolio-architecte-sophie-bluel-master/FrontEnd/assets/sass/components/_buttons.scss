@@ -19,13 +19,17 @@
     border: #1D6154 solid 1.5px;
     border-radius: 60px;
     color: #1D6154;
-      //&:hover {
-      //  background-color: #1D6154;
-      //  color: white;
-      //}
+      &:hover {
+        transition: transform 100ms ease-in-out;
+        transform: scale(1.02);
+      }
   }
   .buttonShort {
     width: 100px;
     padding: 0;
+  }
+  .button_Selected {
+    background-color: #1D6154;
+    color: white;
   }
 }
