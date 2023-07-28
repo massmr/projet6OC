@@ -50,4 +50,11 @@
     margin-top: 50px;
     margin-bottom: 50px;
   }
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: underline 1.1px black;
+  }
 }

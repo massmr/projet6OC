@@ -249,6 +249,12 @@ h2 {
   margin-top: 50px;
   margin-bottom: 50px;
 }
+.form a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: underline 1.1px black;
+}
 
 /*!
  * Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com
