@@ -95,9 +95,14 @@ nav li {
   font-size: 1.2em;
 }
 
-li:hover {
-  color: #B1663C;
+a {
+  text-decoration: none;
+  color: black;
+  &:hover {
+    color: #B1663C;
+  }
 }
+
 #introduction {
   display: flex;
   align-items: center;
