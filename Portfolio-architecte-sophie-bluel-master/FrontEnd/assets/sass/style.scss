@@ -1,0 +1,10 @@
+@import 'abstract/mixins', 'abstract/variables',
+'base/base', 'base/typography',
+'layout/footer', 'layout/header', 'layout/loader',
+'pages/home',
+'themes/theme',
+'components/cards', 'components/buttons',
+//import core styling fontawesome style
+'fontawesome/fontawesome.css',
+//import needed style
+'fontawesome/regular', 'fontawesome/solid';
