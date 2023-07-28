@@ -14,7 +14,6 @@ else {
 }
 
 createArticle(projects);
-console.log(projects);
 
 //Create Projects elements
 function createArticle(projects) {
@@ -30,7 +29,6 @@ function createArticle(projects) {
         //Create caption
         const figureCaption = document.createElement("figcaption");
         figureCaption.innerText = projects[i].title;
-        console.log(projects[i].imageUrl);
 
         //Append Child
         const gallery = document.querySelector(".gallery");
@@ -38,4 +36,35 @@ function createArticle(projects) {
         articleFigure.appendChild(figureImage);
         articleFigure.appendChild(figureCaption);
     }
+}
+
+//filters :
+
+//declare arrays => one iteration per button
+const buttonId = [];
+const projectCategory = [];
+
+//create a filter function for each button
+for (let i = 1, numButton = 4; i < numButton + 1; ++i) {
+    buttonId[i] = document.getElementById("button" + i);
+
+    //event listener on button
+    buttonId[i].addEventListener("click", function (event) {
+
+        //display all projects => invoke first function
+        if (i === 1) {
+            document.querySelector(".gallery").innerHTML = "";
+            createArticle(projects);
+        }
+        //filter functions
+        else {
+            projectCategory[i] = projects.filter(function (e) {
+                return e.categoryId === i - 1;
+            })
+
+            document.querySelector(".gallery").innerHTML = "";
+            createArticle(projectCategory[i]);
+        }
+    })
+
 }
