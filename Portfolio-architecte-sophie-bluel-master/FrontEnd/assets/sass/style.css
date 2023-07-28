@@ -205,6 +205,34 @@ footer nav ul {
   margin: 2em;
 }
 
+.button_Container {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+.button_Container .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 15px;
+  font-family: "Syne";
+  font-weight: 700;
+  font-size: 16px;
+  color: #1D6154;
+  height: 37px;
+  border: #1D6154 solid 1.5px;
+  border-radius: 60px;
+  color: #1D6154;
+}
+.button_Container .buttonShort {
+  width: 100px;
+  padding: 0;
+}
+
 /*!
  * Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
