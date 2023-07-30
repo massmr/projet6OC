@@ -55,9 +55,12 @@ function createArticle(projects) {
 }
 
 //Create Login elements___________________________________________________________________________________
+
+//ternary operator to check if logged in >> locale.storage is used to maintain logging in memory over html pages
 const loggedData = localStorage.getItem("logged");
 let logged = loggedData ? JSON.parse(loggedData) : {test: false};
 
+//if logged then call this function
 if (logged.test === true) {
     console.log("logged = " + logged.test);
     createLoginElements();
@@ -68,9 +71,18 @@ function createLoginElements() {
     loggedinContainer.classList.add("logged_container");
     const header = document.querySelector(".header");
     header.classList.add("header_logged");
+    const loginButton = document.querySelector(".login_button");
+    const loginLink = document.querySelector(".login_link");
+    loginLink.innerHTML = "";
+    const logoutButton = document.createElement("a");
+    logoutButton.classList.add("logout_button");
+    logoutButton.innerHTML = "Logout";
 
     header.prepend(loggedinContainer);
+    loginButton.appendChild(logoutButton);
 }
+
+//Logout___________________________________________________________________________________________________
 
 //filters__________________________________________________________________________________________________
 
