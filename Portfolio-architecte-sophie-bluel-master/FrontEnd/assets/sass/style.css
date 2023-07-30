@@ -5,35 +5,51 @@ footer nav ul {
   margin: 2em;
 }
 
-header {
+.initial_header {
   display: flex;
+  flex-flow: row nowrap;
   justify-content: space-between;
-  margin: 50px 0;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
 }
-
-nav ul {
+.initial_header h1, .initial_header nav {
+  margin: 50px 0px;
+  flex: 1;
+  width: 50%;
+}
+.initial_header nav {
+  display: flex;
+  justify-content: right;
+}
+.initial_header nav ul {
   display: flex;
   align-items: center;
   list-style-type: none;
 }
-
-nav li {
+.initial_header nav li {
   padding: 0 10px;
   font-size: 1.2em;
 }
-
-a {
+.initial_header nav a {
   text-decoration: none;
   color: black;
 }
-a:hover {
+.initial_header nav a:hover {
   color: #B1663C;
 }
 
-log_container {
+.header_logged {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 0;
+}
+
+.logged_container {
   width: 100%;
   height: 59px;
   background-color: black;
+  margin: 0;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -92,16 +108,14 @@ table {
 
 /** end reset css**/
 body {
-  max-width: 1140px;
   margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 50px 0;
+main, footer {
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
 section {
