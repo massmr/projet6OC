@@ -38,6 +38,9 @@ footer nav ul {
 .initial_header nav a:hover {
   color: #B1663C;
 }
+.initial_header nav #login_link {
+  font-weight: 700;
+}
 
 .header_logged {
   display: flex;
@@ -267,7 +270,7 @@ h2 {
   text-align: center;
   border-radius: 60px;
 }
-.form #button_login {
+.form #button_submit-login {
   width: 179px;
   height: 36px;
   margin-top: 50px;
