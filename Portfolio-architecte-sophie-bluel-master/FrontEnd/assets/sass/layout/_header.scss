@@ -40,6 +40,43 @@
   display: flex;
   flex-flow: column nowrap;
   margin-top: 0;
+  .logged_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+  }
+  .logged_edit-button {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 10px;
+    padding: 10px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 400px;
+    color: white;
+  }
+  i {
+    color: white;
+    width: 15.6px;
+    height: 15.6px;
+  }
+  #saveButton {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    background-color: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-family: Work Sans;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
+
+  }
 }
 
 .logged_container {

@@ -62,33 +62,51 @@ function createArticle(projects) {
 const loggedData = localStorage.getItem("logged");
 let logged = loggedData ? JSON.parse(loggedData) : {test: false};
 
-//if logged then call this function
+//if logged then create
 if (logged.test === true) {
-    console.log("logged = " + logged.test);
     createLoginElements();
 }
 function createLoginElements() {
-
-    const loggedinContainer = document.createElement("section");
-    loggedinContainer.classList.add("logged_container");
+    //create black container over header
     const header = document.querySelector(".header");
     header.classList.add("header_logged");
-    const loginButton = document.querySelector(".login_button");
-    const loginLink = document.querySelector(".login_link");
-    loginLink.innerHTML = "";
+    const loggedinContainer = document.createElement("section");
+    loggedinContainer.classList.add("logged_container");
+    const editModeContainer = document.createElement("div");
+    editModeContainer.classList.add("logged_edit-button");
+    const editModeIcon = document.createElement("i");
+    editModeIcon.classList.add("fa-regular");
+    editModeIcon.classList.add("fa-pen-to-square");
+    const editModeText = document.createElement("h3");
+    editModeText.innerHTML = "Mode édition";
+    const saveButton = document.createElement("button");
+    saveButton.classList.add("save_button");
+    saveButton.setAttribute("id", "saveButton");
+    saveButton.innerHTML = "publier les changements";
+
+    header.prepend(loggedinContainer);
+    loggedinContainer.appendChild(editModeContainer);
+    editModeContainer.appendChild(editModeIcon);
+    editModeContainer.appendChild(editModeText);
+    loggedinContainer.appendChild(saveButton);
+
+    //transform login in logout
     const logoutButton = document.createElement("a");
     logoutButton.classList.add("logout_button");
     logoutButton.innerHTML = "Logout";
+    const loginButton = document.querySelector(".login_button");
+    const loginLink = document.querySelector(".login_link");
+    loginLink.innerHTML = "";
 
-    header.prepend(loggedinContainer);
     loginButton.appendChild(logoutButton);
 }
 
-//Logout___________________________________________________________________________________________________
+//Logout logic______________________________________________________________________________________________
 const logoutButton = document.querySelector(".logout_button");
 
 if (logoutButton) {
     logoutButton.addEventListener("click", function (even) {
+        //clear logged data in local storage then reload page
         localStorage.removeItem("logged");
         window.location.reload();
         createArticle(projects);
