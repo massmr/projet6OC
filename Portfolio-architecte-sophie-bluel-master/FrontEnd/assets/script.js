@@ -2,16 +2,18 @@
 
 //GET API and save data in localStorage_______________________________________________________________
 let projects = window.localStorage.getItem('projects');
+
 if (projects === null) {
     const response = await fetch("http://localhost:5678/api/works");
     const projects = await response.json();
 
     const projectsObj = JSON.stringify(projects);
-    window.localStorage.setItem("projects", projectsObj)
+    window.localStorage.setItem("projects", projectsObj);
 }
 else {
     projects = JSON.parse(projects);
 }
+
 //counter to check if page was already charged IOT to ativate first button in green
 let alreadyLogged = false;
 
@@ -83,6 +85,15 @@ function createLoginElements() {
 }
 
 //Logout___________________________________________________________________________________________________
+const logoutButton = document.querySelector(".logout_button");
+
+if (logoutButton) {
+    logoutButton.addEventListener("click", function (even) {
+        localStorage.removeItem("logged");
+        window.location.reload();
+        createArticle(projects);
+    });
+}
 
 //filters__________________________________________________________________________________________________
 
