@@ -112,15 +112,19 @@ function createLoginElements() {
     const portfolioTitle = document.getElementById("portfolio_title");
     portfolioTitle.classList.add("portfolio_title-logged")
     portfolioTitle.classList.remove("portfolio_title-notLogged");
-    const mofifyButton = document.createElement("button");
+    const modifyButton = document.createElement("button");
+    modifyButton.classList.add("modify_button");
+    const editModeIconForTitle = document.createElement("i");
+    editModeIconForTitle.classList.add("fa-regular");
+    editModeIconForTitle.classList.add("fa-pen-to-square");
     const editModeTextForTitle = document.createElement("h3");
     editModeTextForTitle.innerHTML = "modifier";
 
     portfolio.prepend(portfolioTitleLoggedContainer);
     portfolioTitleLoggedContainer.appendChild(portfolioTitle);
-    portfolioTitleLoggedContainer.appendChild(mofifyButton);
-    mofifyButton.appendChild(editModeIcon);
-    mofifyButton.appendChild(editModeTextForTitle);
+    portfolioTitleLoggedContainer.appendChild(modifyButton);
+    modifyButton.appendChild(editModeIconForTitle);
+    modifyButton.appendChild(editModeTextForTitle);
 }
 
 //Logout logic______________________________________________________________________________________________
@@ -174,3 +178,20 @@ for (let i = 1, numButton = 4; i < numButton + 1; ++i) {
         })
     }
 }
+
+//Modale_______________________________________________________________________________________
+
+//create overlay div and display it on click
+const overlay = document.createElement("div");
+overlay.classList.add("overlay");
+
+const body = document.body;
+body.prepend(overlay);
+
+//create modale window and display it on click
+
+
+const modifyButton = document.querySelector(".modify_button");
+modifyButton.addEventListener("click", function() {
+    document.querySelector(".overlay").style.display = 'block';
+});

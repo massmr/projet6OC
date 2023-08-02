@@ -90,6 +90,15 @@ footer nav ul {
   margin: 0;
 }
 
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  z-index: 1000;
+  display: none;
+}
+
 #introduction {
   display: flex;
   align-items: center;
