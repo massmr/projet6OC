@@ -128,14 +128,21 @@ footer nav ul {
 }
 .portfolio_title-logged-div .portfolio_title-logged {
   display: flex;
-  margin-right: 20px;
   margin-bottom: 0;
   align-items: center;
   justify-content: center;
 }
+.portfolio_title-logged-div button {
+  display: flex;
+  flex-flow: row nowrap;
+  border: none;
+  background-color: transparent;
+  gap: 10px;
+  padding: 15px;
+}
 .portfolio_title-logged-div h3 {
   position: relative;
-  top: 2.5px;
+  top: 0.7px;
 }
 
 .portfolio_title-notLogged {
@@ -150,7 +157,6 @@ footer nav ul {
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
-
 .gallery img {
   width: 100%;
   max-width: 304px;

@@ -112,13 +112,15 @@ function createLoginElements() {
     const portfolioTitle = document.getElementById("portfolio_title");
     portfolioTitle.classList.add("portfolio_title-logged")
     portfolioTitle.classList.remove("portfolio_title-notLogged");
+    const mofifyButton = document.createElement("button");
     const editModeTextForTitle = document.createElement("h3");
     editModeTextForTitle.innerHTML = "modifier";
 
     portfolio.prepend(portfolioTitleLoggedContainer);
     portfolioTitleLoggedContainer.appendChild(portfolioTitle);
-    portfolioTitleLoggedContainer.appendChild(editModeIcon);
-    portfolioTitleLoggedContainer.append(editModeTextForTitle);
+    portfolioTitleLoggedContainer.appendChild(mofifyButton);
+    mofifyButton.appendChild(editModeIcon);
+    mofifyButton.appendChild(editModeTextForTitle);
 }
 
 //Logout logic______________________________________________________________________________________________

@@ -33,14 +33,21 @@
   gap: 10px;
   .portfolio_title-logged {
     display: flex;
-    margin-right: 20px;
     margin-bottom: 0;
     align-items: center;
     justify-content: center;
   }
+  button {
+    display: flex;
+    flex-flow: row nowrap;
+    border: none;
+    background-color: transparent;
+    gap: 10px;
+    padding: 15px;
+  }
   h3 {
     position: relative;
-    top: 2.5px;
+    top: 0.7px;
   }
 }
 
@@ -55,10 +62,9 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 20px;
   grid-row-gap: 20px;
-}
-
-.gallery img {
-  width: 100%;
-  max-width: 304px;
-  max-height: 407px;
+  & img {
+    width: 100%;
+    max-width: 304px;
+    max-height: 407px;
+  }
 }
