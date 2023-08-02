@@ -1,0 +1,64 @@
+#introduction {
+  display: flex;
+  align-items: center;
+}
+#introduction figure {
+  flex: 1
+}
+#introduction img {
+  display: block;
+  //margin: auto;
+  width: 88%;
+  margin-left: 0;
+  margin-right: 30px;
+}
+
+#introduction article {
+  flex: 1;
+  max-width: 404px;
+}
+#introduction h2 {
+  margin-bottom: 1em;
+}
+
+#introduction p {
+  margin-bottom: 0.5em;
+}
+
+.portfolio_title-logged-div {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  .portfolio_title-logged {
+    display: flex;
+    margin-right: 20px;
+    margin-bottom: 0;
+    align-items: center;
+    justify-content: center;
+  }
+  h3 {
+    position: relative;
+    top: 2.5px;
+  }
+}
+
+.portfolio_title-notLogged {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 304px;
+  max-height: 407px;
+}

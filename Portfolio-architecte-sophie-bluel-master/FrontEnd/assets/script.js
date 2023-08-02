@@ -14,7 +14,7 @@ else {
     projects = JSON.parse(projects);
 }
 
-//counter to check if page was already charged IOT to ativate first button in green
+//counter to check if page was already charged IOT to activate first button in green
 let alreadyLogged = false;
 
 //first call to create first project grid
@@ -34,6 +34,8 @@ function createArticle(projects) {
         //Create caption
         const figureCaption = document.createElement("figcaption");
         figureCaption.innerText = projects[i].title;
+        const portfolioTitle = document.getElementById("portfolio_title");
+        portfolioTitle.classList.add("portfolio_title-notLogged");
 
         //Append Child
         const gallery = document.querySelector(".gallery");
@@ -67,6 +69,7 @@ if (logged.test === true) {
     createLoginElements();
 }
 function createLoginElements() {
+
     //create black container over header
     const header = document.querySelector(".header");
     header.classList.add("header_logged");
@@ -99,6 +102,23 @@ function createLoginElements() {
     loginLink.innerHTML = "";
 
     loginButton.appendChild(logoutButton);
+
+    //Erase Filters and add "icon + modifier" button
+    const filterButton = document.querySelector(".button_Container");
+    filterButton.innerHTML = "";
+    const portfolioTitleLoggedContainer = document.createElement("div");
+    portfolioTitleLoggedContainer.classList.add("portfolio_title-logged-div");
+    const portfolio = document.getElementById("portfolio");
+    const portfolioTitle = document.getElementById("portfolio_title");
+    portfolioTitle.classList.add("portfolio_title-logged")
+    portfolioTitle.classList.remove("portfolio_title-notLogged");
+    const editModeTextForTitle = document.createElement("h3");
+    editModeTextForTitle.innerHTML = "modifier";
+
+    portfolio.prepend(portfolioTitleLoggedContainer);
+    portfolioTitleLoggedContainer.appendChild(portfolioTitle);
+    portfolioTitleLoggedContainer.appendChild(editModeIcon);
+    portfolioTitleLoggedContainer.append(editModeTextForTitle);
 }
 
 //Logout logic______________________________________________________________________________________________

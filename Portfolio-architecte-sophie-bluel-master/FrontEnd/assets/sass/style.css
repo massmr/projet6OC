@@ -60,7 +60,7 @@ footer nav ul {
 }
 .header_logged h3 {
   font-size: 16px;
-  font-weight: 400px;
+  font-weight: 400;
   color: white;
 }
 .header_logged i {
@@ -88,6 +88,73 @@ footer nav ul {
   height: 59px;
   background-color: black;
   margin: 0;
+}
+
+#introduction {
+  display: flex;
+  align-items: center;
+}
+
+#introduction figure {
+  flex: 1;
+}
+
+#introduction img {
+  display: block;
+  width: 88%;
+  margin-left: 0;
+  margin-right: 30px;
+}
+
+#introduction article {
+  flex: 1;
+  max-width: 404px;
+}
+
+#introduction h2 {
+  margin-bottom: 1em;
+}
+
+#introduction p {
+  margin-bottom: 0.5em;
+}
+
+.portfolio_title-logged-div {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.portfolio_title-logged-div .portfolio_title-logged {
+  display: flex;
+  margin-right: 20px;
+  margin-bottom: 0;
+  align-items: center;
+  justify-content: center;
+}
+.portfolio_title-logged-div h3 {
+  position: relative;
+  top: 2.5px;
+}
+
+.portfolio_title-notLogged {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 304px;
+  max-height: 407px;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -152,7 +219,7 @@ body {
 }
 
 main, footer {
-  max-width: 1140px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -180,50 +247,6 @@ h2 {
   font-weight: 700;
   font-size: 30px;
   color: #1D6154;
-}
-
-#introduction {
-  display: flex;
-  align-items: center;
-}
-
-#introduction figure {
-  flex: 1;
-}
-
-#introduction img {
-  display: block;
-  margin: auto;
-  width: 80%;
-}
-
-#introduction article {
-  flex: 1;
-}
-
-#introduction h2 {
-  margin-bottom: 1em;
-}
-
-#introduction p {
-  margin-bottom: 0.5em;
-}
-
-#portfolio h2 {
-  text-align: center;
-  margin-bottom: 1em;
-}
-
-.gallery {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
-}
-
-.gallery img {
-  width: 100%;
 }
 
 .button_Container {
