@@ -131,7 +131,7 @@ function createLoginElements() {
 const logoutButton = document.querySelector(".logout_button");
 
 if (logoutButton) {
-    logoutButton.addEventListener("click", function (even) {
+    logoutButton.addEventListener("click", function () {
         //clear logged data in local storage then reload page
         localStorage.removeItem("logged");
         window.location.reload();
@@ -209,6 +209,8 @@ function createModaleElements(el){
     overlay.style.display = 'block';
 
     //create modale
+    const centerContainer = document.createElement("div");
+    centerContainer.classList.add("center");
     const modaleContainer = document.createElement("article");
     modaleContainer.classList.add("modale");
     const modaleXmark = document.createElement("i");
@@ -230,7 +232,8 @@ function createModaleElements(el){
     modaleButtonDelete.classList.add("button_delete");
     modaleButtonDelete.innerHTML = "Supprimer la galerie"
 
-    body.prepend(modaleContainer);
+    overlay.after(centerContainer);
+    centerContainer.prepend(modaleContainer);
     modaleContainer.appendChild(modaleXmark);
     modaleContainer.appendChild(modaleTitle);
     modaleContainer.appendChild(modaleGallery);
@@ -274,34 +277,41 @@ function createModaleElements(el){
 
     createModaleGallery(preview);
     closeModale(modaleXmark);
-    closeModale(overlay);
+    //closeModale(centerContainer);
     deleteProjectModale(el);
-};
+    slideToNextModale();
+}
 
 //___________||||||||||||||close modale|||||||||||||||||____________________________
 function closeModale(el) {
-    if(el) {
-        el.addEventListener("click", function() {
-            //hide overlay
-            document.querySelector(".overlay").style.display = 'none';
+    //redeclare center div & modale locally
+    const centerContainer = document.querySelector(".center");
+    const modaleContainer = document.querySelector(".modale");
+    const modaleChildrens = modaleContainer.querySelectorAll("*");
+    //check center existence
+    if(centerContainer) {
+        el.addEventListener("click", function(event) {
+            //check if event.target is in .xmark
+            if (event.target.classList.contains("xmark")) {
+                closeEventModale();
+            }
 
-            //erase modale
-            const modaleContainer = document.querySelector(".modale");
-            modaleContainer.remove();
-
-            //recreate new gallery updated
-            const gallery = document.querySelector(".gallery");
-            gallery.innerHTML = "";
-            createArticle(preview);
-
+            function closeEventModale() {
+                //hide overlay
+                document.querySelector(".overlay").style.display = 'none';
+                //erase modale
+                centerContainer.remove();
+                //recreate new gallery updated
+                const gallery = document.querySelector(".gallery");
+                gallery.innerHTML = "";
+                createArticle(preview);
+            }
         });
-    } else {
-        return;
     }
 }
 
 
-//________||||||||||||||||Erase projects||||||||||||||||___________________________
+//________||||||||||||||||Delete projects||||||||||||||||___________________________
 //make new array to preview :
 const trash = [];
 console.log(preview);
@@ -332,3 +342,24 @@ function deleteProjectModale(el) {
     }
 }
 
+//____________||||||Go to next modale|||||||__________________________________________
+
+function slideToNextModale() {
+
+    //declare button
+    const buttonToNextModale = document.querySelector(".button_modale");
+
+    //add event listener click on button
+    //>> add class with css animation
+    if (buttonToNextModale) {
+        buttonToNextModale.addEventListener("click", function() {
+
+            const centerContainer = document.querySelector(".center");
+            centerContainer.classList.add("translate_out");
+
+            setTimeout(() => {
+                centerContainer.remove();
+            }, 1000);
+        })
+    }
+}
