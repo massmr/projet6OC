@@ -181,17 +181,106 @@ for (let i = 1, numButton = 4; i < numButton + 1; ++i) {
 
 //Modale_______________________________________________________________________________________
 
-//create overlay div and display it on click
+//create overlay
 const overlay = document.createElement("div");
 overlay.classList.add("overlay");
 
 const body = document.body;
 body.prepend(overlay);
 
-//create modale window and display it on click
-
-
+//display overlay + modale
 const modifyButton = document.querySelector(".modify_button");
-modifyButton.addEventListener("click", function() {
+if(modifyButton) {
+    modifyButton.addEventListener("click", function() {
+        createModaleElements(projects)
+    } );
+}
+
+//create elements
+function createModaleElements(projects){
+    //control state of modal
+    //window.localStorage.setItem("modaleState", JSON.stringify(true));
+    //activate overlay
     document.querySelector(".overlay").style.display = 'block';
-});
+
+    //create modale
+    const modaleContainer = document.createElement("article");
+    modaleContainer.classList.add("modale");
+    const modaleXmark = document.createElement("i");
+    modaleXmark.classList.add("fa-solid");
+    modaleXmark.classList.add("fa-xmark");
+    modaleXmark.classList.add("xmark")
+    const modaleTitle = document.createElement("h4");
+    modaleTitle.innerHTML = "Galerie photo";
+    const modaleGallery = document.createElement("div");
+    modaleGallery.classList.add("modale_gallery");
+    const modaleButtonContainer = document.createElement("div");
+    modaleButtonContainer.classList.add("button_modale-container");
+    const modaleButtonAdd = document.createElement("button");
+    modaleButtonAdd.classList.add("button");
+    modaleButtonAdd.classList.add("button_Selected");
+    modaleButtonAdd.classList.add("button_modale")
+    modaleButtonAdd.innerHTML = "Ajouter une photo";
+    const modaleButtonDelete = document.createElement("button");
+    modaleButtonDelete.classList.add("button_delete");
+    modaleButtonDelete.innerHTML = "Supprimer la galerie"
+
+    body.prepend(modaleContainer);
+    modaleContainer.appendChild(modaleXmark);
+    modaleContainer.appendChild(modaleTitle);
+    modaleContainer.appendChild(modaleGallery);
+    modaleContainer.appendChild(modaleButtonContainer);
+    modaleButtonContainer.appendChild(modaleButtonAdd);
+    modaleButtonContainer.appendChild(modaleButtonDelete);
+
+    //display projects
+    for (let i = 0; i < projects.length; ++i) {
+        //Create figures
+        //Tips : modaleFigureContainer is here only to contain trash icon when position absolute :)
+        const modaleFigureContainer = document.createElement("div");
+        modaleFigureContainer.classList.add("modale_figure-container")
+        const modaleFigure = document.createElement("figure");
+        modaleFigure.classList.add("modale_figure");
+        //Create image
+        const figureImage = document.createElement("img");
+        figureImage.src = projects[i].imageUrl;
+        figureImage.classList.add("modale_image");
+        //Create caption
+        const figureCaption = document.createElement("p");
+        figureCaption.innerText = "éditer";
+        //create delete icon
+        const deleteIcon = document.createElement("i");
+        deleteIcon.classList.add("fa-solid");
+        deleteIcon.classList.add("fa-trash-can");
+        deleteIcon.classList.add("trash")
+
+        modaleGallery.appendChild(modaleFigureContainer);
+        modaleFigureContainer.appendChild(modaleFigure);
+        modaleFigure.appendChild(figureImage);
+        modaleFigure.appendChild(figureCaption);
+        modaleFigure.prepend(deleteIcon);
+
+    }
+
+    closeModale(modaleXmark);
+};
+
+//close modale
+//const xmark = document.querySelector(".xmark");
+
+//console.log(xmark);
+function closeModale(el) {
+    if(el) {
+        console.log(2);
+        el.addEventListener("click", function() {
+            //hide overlay
+            document.querySelector(".overlay").style.display = 'none';
+
+            //erase modale
+            const modaleContainer = document.querySelector(".modale");
+            modaleContainer.remove();
+        });
+    } else {
+        return;
+    }
+}
