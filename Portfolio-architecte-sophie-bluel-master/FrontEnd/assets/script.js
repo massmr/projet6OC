@@ -209,7 +209,8 @@ if(modifyButton) {
 //_____________||||||||||||||create elements|||||||||||||____________________________________
 async function createModaleAsync(el){
     //activate overlay
-    overlay.style.display = 'block';
+    //overlay.style.display = 'block';
+    overlay.classList.add("overlay_active");
 
     //create modale
     const centerContainer = document.createElement("div");
@@ -281,40 +282,43 @@ async function createModaleAsync(el){
     await createModaleGallery(preview);
     console.log("All modale constructions ended");
 
+    //first slide_in
     setTimeout(() => {
-        modaleContainer.classList.add("translate_in");
-    }, 500);
+        slideInModale(modaleContainer);
+    }, 50);
     console.log("modale \"translate-in\" animation ended");
 
     closeModale(modaleXmark);
     deleteProjectModale(el);
+    deleteAllProjectsModale();
     slideToNextModale();
 }
-
-//animate modale after creation
-/*setTimeout(() => {
-    modaleContainer.classList.add("translate_in");
-}, 10000);*/
-
 
 //___________||||||||||||||close modale|||||||||||||||||____________________________
 function closeModale(el) {
     //redeclare center div & modale locally
     const centerContainer = document.querySelector(".center");
-
     //check center existence
     if(centerContainer) {
         el.addEventListener("click", function(event) {
             //check if event.target is in .xmark
             if (event.target.classList.contains("xmark")) {
-                closeEventModale();
+                closeEventModaleAsync();
+                console.log("All operations to closing modales were successfull");
             }
 
-            function closeEventModale() {
-                //hide overlay
-                document.querySelector(".overlay").style.display = 'none';
-                //erase modale
-                centerContainer.remove();
+            async function closeEventModaleAsync() {
+                //hide overlay by switching classes fm active to notActive
+                overlay.classList.add("overlay_notActive");
+                overlay.classList.remove("overlay_active")
+
+                //slide modale
+                slideOutModale(centerContainer);
+
+                //then erase modale
+                setTimeout(() => {
+                    centerContainer.remove();
+                }, 1000);
                 //recreate new gallery updated
                 const gallery = document.querySelector(".gallery");
                 gallery.innerHTML = "";
@@ -328,7 +332,7 @@ function closeModale(el) {
 //________||||||||||||||||Delete projects||||||||||||||||___________________________
 //make new array to preview :
 const trash = [];
-console.log(preview);
+//console.log(preview);
 
 //delete function : event listener on each trash icon
 //>> splice new Arr
@@ -350,31 +354,50 @@ function deleteProjectModale(el) {
             //rm old gallery
             const projectRemoved = document.getElementById("figure_" + (i + 1));
             projectRemoved.remove();
-            //recreate gallery with new preview
-            console.log(preview);
+            console.log("Project id : " + (i + 1) + " was deleted");
         })
     }
 }
 
+function deleteAllProjectsModale() {
+    const modaleButtonDelete = document.querySelector(".button_delete");
+    const modaleGallery = document.querySelector(".modale_gallery");
+    modaleButtonDelete.addEventListener("click", function() {
+        modaleGallery.innerHTML = "";
+        preview = [];
+    });
+}
+
+//____________|||||||Slide modale||||||||||___________________________________________
+function slideInModale(el) {
+
+    el.classList.add("translate_in");
+    el.classList.remove("translate_out")
+}
+
+function slideOutModale(el) {
+    el.classList.remove("translate_in");
+    el.classList.add("translate_out");
+
+    setTimeout(() => {
+        el.remove();
+        console.log("Modale was succesfully removed");
+    }, 1000);
+}
 //____________||||||Go to next modale|||||||__________________________________________
 
 function slideToNextModale() {
 
     //declare button
     const buttonToNextModale = document.querySelector(".button_modale");
+    const centerContainer = document.querySelector(".center");
 
     //add event listener click on button
-    //>> add class with css animation
+    //>> call function slide out
     if (buttonToNextModale) {
         buttonToNextModale.addEventListener("click", function() {
 
-            const centerContainer = document.querySelector(".center");
-            centerContainer.classList.remove("translate_in");
-            centerContainer.classList.add("translate_out");
-
-            setTimeout(() => {
-                centerContainer.remove();
-            }, 1000);
+            slideOutModale(centerContainer);
         })
     }
 }

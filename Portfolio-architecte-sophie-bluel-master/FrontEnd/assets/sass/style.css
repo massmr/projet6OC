@@ -96,9 +96,41 @@ footer nav ul {
   background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   z-index: 10;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.6s ease-in-out;
 }
 
+.overlay_active {
+  animation: fade_in 0.6s ease-in-out;
+  visibility: visible;
+  opacity: 1;
+}
+
+.overlay_notActive {
+  animation: fade_out 0.6s ease-in-out;
+}
+
+@keyframes fade_in {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+@keyframes fade_out {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
 .center {
   display: grid;
   place-items: center;
@@ -223,7 +255,7 @@ footer nav ul {
 .translate_in {
   transform: translateX(-250%);
   -webkit-transform: translateX(-250%);
-  -moz-transform: translateX(-250%);
+  -moz-transform: translateX(-190%);
   -ms-transform: translateX(-250%);
   -o-transform: translateX(-250%);
   -webkit-transition: -webkit-transform 0.6s ease-in-out; /* Changed here */
@@ -281,6 +313,9 @@ footer nav ul {
   background-color: transparent;
   gap: 10px;
   padding: 15px;
+}
+.portfolio_title-logged-div button:hover {
+  color: #B1663C;
 }
 .portfolio_title-logged-div h3 {
   position: relative;
