@@ -184,7 +184,7 @@ for (let i = 1, numButton = 4; i < numButton + 1; ++i) {
 //All modale is made out of this array because it is only temporary and waits to be POSTed
 let preview = projects.map(el => el);
 
-//______________________|||||||create overlay||||||||__________________________________________
+//______________________|||||||create overlay && 1ST invoke||||||||____________________________
 
 const overlay = document.createElement("div");
 overlay.classList.add("overlay");
@@ -198,14 +198,17 @@ if(modifyButton) {
     modifyButton.addEventListener("click", function() {
         //always invoke with preview to prevent reinvoking wrong array after project deletion
         //preview = projects duplication
-        createModaleElements(preview);
+        createModaleAsync(preview).then(() => {
+            console.log("All modale construction and animation operations were successfull");
+        }).catch(error => {
+            console.log("There was an error : ", error)
+        });
     } );
 }
 
 //_____________||||||||||||||create elements|||||||||||||____________________________________
-function createModaleElements(el){
+async function createModaleAsync(el){
     //activate overlay
-    const overlay = document.querySelector(".overlay");
     overlay.style.display = 'block';
 
     //create modale
@@ -230,7 +233,7 @@ function createModaleElements(el){
     modaleButtonAdd.innerHTML = "Ajouter une photo";
     const modaleButtonDelete = document.createElement("button");
     modaleButtonDelete.classList.add("button_delete");
-    modaleButtonDelete.innerHTML = "Supprimer la galerie"
+    modaleButtonDelete.innerHTML = "Supprimer la galerie";
 
     overlay.after(centerContainer);
     centerContainer.prepend(modaleContainer);
@@ -275,19 +278,30 @@ function createModaleElements(el){
 
     }
 
-    createModaleGallery(preview);
+    await createModaleGallery(preview);
+    console.log("All modale constructions ended");
+
+    setTimeout(() => {
+        modaleContainer.classList.add("translate_in");
+    }, 500);
+    console.log("modale \"translate-in\" animation ended");
+
     closeModale(modaleXmark);
-    //closeModale(centerContainer);
     deleteProjectModale(el);
     slideToNextModale();
 }
+
+//animate modale after creation
+/*setTimeout(() => {
+    modaleContainer.classList.add("translate_in");
+}, 10000);*/
+
 
 //___________||||||||||||||close modale|||||||||||||||||____________________________
 function closeModale(el) {
     //redeclare center div & modale locally
     const centerContainer = document.querySelector(".center");
-    const modaleContainer = document.querySelector(".modale");
-    const modaleChildrens = modaleContainer.querySelectorAll("*");
+
     //check center existence
     if(centerContainer) {
         el.addEventListener("click", function(event) {
@@ -355,6 +369,7 @@ function slideToNextModale() {
         buttonToNextModale.addEventListener("click", function() {
 
             const centerContainer = document.querySelector(".center");
+            centerContainer.classList.remove("translate_in");
             centerContainer.classList.add("translate_out");
 
             setTimeout(() => {
