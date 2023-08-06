@@ -257,8 +257,8 @@ footer nav ul {
   transform: translateX(0);
 }
 
-.translate_out {
-  transform: translateX(-150%);
+.translate_out-left {
+  transform: translateX(-100%);
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
   -ms-transform: translateX(-100%);
@@ -280,6 +280,18 @@ footer nav ul {
   -moz-transition: -moz-transform 0.6s ease-in-out, left 0.6s ease-in-out;
   -o-transition: -o-transform 0.6s ease-in-out, left 0.6s ease-in-out;
   transition: transform 0.6s ease-in-out, left 0.6s ease-in-out;
+}
+
+.translate_out-right {
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  -o-transform: translateX(100%);
+  -webkit-transition: -webkit-transform 0.6s ease-in-out; /* Changed here */
+  -moz-transition: -moz-transform 0.6s ease-in-out;
+  -o-transition: -o-transform 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 }
 
 #introduction {
@@ -391,6 +403,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   line-height: 1;
+  overflow-x: hidden;
 }
 
 ol, ul {

@@ -396,7 +396,7 @@ function closeModale(el) {
                 overlay.classList.remove("overlay_active")
 
                 //slide modale
-                slideOutModale(centerContainer);
+                slideOutRightModale(centerContainer);
 
                 //then erase modale
                 setTimeout(() => {
@@ -455,18 +455,24 @@ function deleteAllProjectsModale() {
 function slideInModale(el) {
     setTimeout(() => {
         el.classList.add("translate_in");
-        el.classList.remove("translate_out")
+        el.classList.remove("translate_out-left");
+        el.classList.remove("translate_out-right");
     }, 50);
 }
 
-function slideOutModale(el) {
+function slideOutLeftModale(el) {
     el.classList.remove("translate_in");
-    el.classList.add("translate_out");
+    el.classList.add("translate_out-left");
 
     setTimeout(() => {
         el.remove();
         console.log("Modale 1 was succesfully removed");
     }, 1000);
+}
+
+function slideOutRightModale(el) {
+    el.classList.remove("translate_in");
+    el.classList.add("translate_out-right");
 }
 function slideToNextModale() {
 
@@ -479,7 +485,7 @@ function slideToNextModale() {
     if (buttonToNextModale) {
         buttonToNextModale.addEventListener("click", async function() {
 
-            slideOutModale(centerContainer);
+            slideOutLeftModale(centerContainer);
             createModale2();
         });
     }
@@ -494,16 +500,20 @@ function slideBackModale() {
 
 
     modale2Arrow.addEventListener("click", function() {
-        //rm 2nd modale && 1st center container bc remake
-        modale2Container.remove();
-        centerContainer.remove();
+        //move 2nd modfale to right
+        slideOutRightModale(centerContainer);
         //remake 1st modale
         createModaleAsync(preview);
         setTimeout(() => {
+            //spawn tester to intial state after creation of modale 1
             spawnTester.state = false;
             console.log("spawnTester = " + spawnTester + " >> initial state again");
         }, 1000);
-        //spawn tester to intial state
-
+        //rm 2nd modale && 1st center container bc remake
+        //timeout to let play animation
+        setTimeout(() => {
+            modale2Container.remove();
+            centerContainer.remove();
+        }, 1000);
     })
 }
