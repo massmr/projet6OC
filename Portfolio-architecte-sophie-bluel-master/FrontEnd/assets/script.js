@@ -14,6 +14,8 @@ else {
     projects = JSON.parse(projects);
 }
 
+console.log(projects);
+
 //counter to check if page was already charged IOT to activate first button in green
 let alreadyLogged = false;
 
@@ -31,7 +33,7 @@ function createArticle(el) {
         //Create image
         const figureImage = document.createElement("img");
         figureImage.src = el[i].imageUrl;
-        //Create caption
+        //Create captioncca
         const figureCaption = document.createElement("figcaption");
         figureCaption.innerText = el[i].title;
         const portfolioTitle = document.getElementById("portfolio_title");
@@ -55,7 +57,6 @@ function createArticle(el) {
         }
     }
     alreadyLogged = true;
-
 }
 
 //Create Login elements___________________________________________________________________________________
@@ -206,25 +207,41 @@ if(modifyButton) {
     } );
 }
 
-//_____________||||||||||||||create elements|||||||||||||____________________________________
+let spawnTester = {
+    state: false,
+}
+console.log("spawnTester = " + spawnTester.state);
+
+//_____________||||||||||||||create 1st modale|||||||||||||____________________________________
 async function createModaleAsync(el){
     //activate overlay
-    //overlay.style.display = 'block';
     overlay.classList.add("overlay_active");
 
     //create modale
     const centerContainer = document.createElement("div");
     centerContainer.classList.add("center");
+    centerContainer.setAttribute("id", "modale_center-container");
     const modaleContainer = document.createElement("article");
     modaleContainer.classList.add("modale");
+    if (spawnTester.state === false) {
+        modaleContainer.classList.add("spawn_right");
+        console.log("spawnTester = " + spawnTester.state + " >> modale has spawn right");
+    }
+    if (spawnTester.state === true) {
+        modaleContainer.classList.add("spawn_left");
+        console.log("spawnTester = " + spawnTester.state + " >> modale has spawn left");
+    }
     const modaleXmark = document.createElement("i");
     modaleXmark.classList.add("fa-solid");
     modaleXmark.classList.add("fa-xmark");
-    modaleXmark.classList.add("xmark")
+    modaleXmark.classList.add("top_right");
+    modaleXmark.classList.add("modale_icon");
+    modaleXmark.classList.add("modale_xmark");
     const modaleTitle = document.createElement("h4");
     modaleTitle.innerHTML = "Galerie photo";
     const modaleGallery = document.createElement("div");
     modaleGallery.classList.add("modale_gallery");
+    modaleGallery.classList.add("modale_elem-container");
     const modaleButtonContainer = document.createElement("div");
     modaleButtonContainer.classList.add("button_modale-container");
     const modaleButtonAdd = document.createElement("button");
@@ -286,12 +303,78 @@ async function createModaleAsync(el){
     setTimeout(() => {
         slideInModale(modaleContainer);
     }, 50);
-    console.log("modale \"translate-in\" animation ended");
+    console.log("modale \"translate\" animation ended");
 
     closeModale(modaleXmark);
     deleteProjectModale(el);
     deleteAllProjectsModale();
     slideToNextModale();
+}
+
+//____________||||||Create 2nd modale||||||||_______________________________________
+
+function createModale2(){
+    //modify spawnTester state IOT prepare for slideBack fct
+    spawnTester.state = true;
+    console.log("modale 2 complete, && spawnTester = " + spawnTester.state);
+
+    //create modale 2
+    const center2Container = document.createElement("div");
+    center2Container.classList.add("center");
+    const modale2Container = document.createElement("article");
+    modale2Container.classList.add("modale");
+    modale2Container.classList.add("spawn_right");
+    modale2Container.setAttribute("id", "modale_2")
+    const modale2Arrow = document.createElement("i");
+    modale2Arrow.classList.add("fa-solid");
+    modale2Arrow.classList.add("fa-arrow-left");
+    modale2Arrow.classList.add("top_left");
+    modale2Arrow.classList.add("modale_icon");
+    modale2Arrow.setAttribute("id", "modale_arrow")
+    const modale2Xmark = document.createElement("i");
+    modale2Xmark.classList.add("fa-solid");
+    modale2Xmark.classList.add("fa-xmark");
+    modale2Xmark.classList.add("top_right");
+    modale2Xmark.classList.add("modale_icon");
+    modale2Xmark.classList.add("modale_xmark");
+    const modale2Title = document.createElement("h4");
+    modale2Title.innerHTML = "Ajout photo";
+    const modale2ElemContainer = document.createElement("div");
+    modale2ElemContainer.classList.add("modale_elem-container");
+
+    //add image input
+    //add title input
+    //add category select
+
+    const modale2ButtonContainer = document.createElement("div");
+    modale2ButtonContainer.classList.add("button_modale-container");
+    const modale2ButtonValidate = document.createElement("button");
+    modale2ButtonValidate.classList.add("button");
+    modale2ButtonValidate.classList.add("button_Selected");
+    modale2ButtonValidate.classList.add("button_modale2")
+    modale2ButtonValidate.innerHTML = "Valider";
+
+    overlay.after(center2Container);
+    center2Container.prepend(modale2Container);
+    modale2Container.appendChild(modale2Arrow);
+    modale2Container.appendChild(modale2Xmark);
+    modale2Container.appendChild(modale2Title);
+    modale2Container.appendChild(modale2ElemContainer);
+    modale2Container.appendChild(modale2ButtonContainer);
+    modale2ButtonContainer.appendChild(modale2ButtonValidate);
+
+    console.log("All modale 2 constructions ended");
+
+    //first slide_in
+    setTimeout(() => {
+        slideInModale(modale2Container);
+    }, 50);
+    console.log("modale \"translate-in\" animation ended");
+
+    closeModale(modale2Xmark);
+    //slide to next >>> save, close and preview
+    slideToNextModale();
+    slideBackModale();
 }
 
 //___________||||||||||||||close modale|||||||||||||||||____________________________
@@ -302,7 +385,7 @@ function closeModale(el) {
     if(centerContainer) {
         el.addEventListener("click", function(event) {
             //check if event.target is in .xmark
-            if (event.target.classList.contains("xmark")) {
+            if (event.target.classList.contains("modale_xmark")) {
                 closeEventModaleAsync();
                 console.log("All operations to closing modales were successfull");
             }
@@ -370,9 +453,10 @@ function deleteAllProjectsModale() {
 
 //____________|||||||Slide modale||||||||||___________________________________________
 function slideInModale(el) {
-
-    el.classList.add("translate_in");
-    el.classList.remove("translate_out")
+    setTimeout(() => {
+        el.classList.add("translate_in");
+        el.classList.remove("translate_out")
+    }, 50);
 }
 
 function slideOutModale(el) {
@@ -381,11 +465,9 @@ function slideOutModale(el) {
 
     setTimeout(() => {
         el.remove();
-        console.log("Modale was succesfully removed");
+        console.log("Modale 1 was succesfully removed");
     }, 1000);
 }
-//____________||||||Go to next modale|||||||__________________________________________
-
 function slideToNextModale() {
 
     //declare button
@@ -395,9 +477,33 @@ function slideToNextModale() {
     //add event listener click on button
     //>> call function slide out
     if (buttonToNextModale) {
-        buttonToNextModale.addEventListener("click", function() {
+        buttonToNextModale.addEventListener("click", async function() {
 
             slideOutModale(centerContainer);
-        })
+            createModale2();
+        });
     }
+}
+function slideBackModale() {
+
+    //redclare DOM elem and target them
+    const modale2Arrow = document.getElementById("modale_arrow");
+    //const modaleContainer = document.querySelector(".modale");
+    const modale2Container = document.getElementById("modale_2");
+    const centerContainer = document.querySelector(".center");
+
+
+    modale2Arrow.addEventListener("click", function() {
+        //rm 2nd modale && 1st center container bc remake
+        modale2Container.remove();
+        centerContainer.remove();
+        //remake 1st modale
+        createModaleAsync(preview);
+        setTimeout(() => {
+            spawnTester.state = false;
+            console.log("spawnTester = " + spawnTester + " >> initial state again");
+        }, 1000);
+        //spawn tester to intial state
+
+    })
 }

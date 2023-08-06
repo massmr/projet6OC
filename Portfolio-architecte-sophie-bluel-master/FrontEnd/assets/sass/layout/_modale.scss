@@ -1,3 +1,4 @@
+//Overlay
 .overlay {
   width: 100vw;
   height: 100vh;
@@ -39,6 +40,7 @@
   }
 }
 
+//modale
 .center {
   display: grid;
   place-items: center;
@@ -48,6 +50,7 @@
   width: 100%;
   height: 100%;
   z-index: 20;
+  //overflow: hidden;
 }
 
 .modale {
@@ -56,17 +59,22 @@
   max-height: 700px;
   background-color: white;
   border-radius: 10px;
-  position: fixed;
+  position: absolute;
   z-index: 300;
   padding: 60px 0 0 0;
-  right: -50%;
-  transform: translateX(0);
-  & .xmark {
-    width: 30px;
-    height: 30px;
+  & .top_right {
     position: absolute;
     top: 30px;
     right: 30px;
+  }
+  & .top_left {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+  }
+  & .modale_icon {
+    width: 30px;
+    height: 30px;
     transform: scale(1.5);
     display: flex;
     align-items: center;
@@ -88,9 +96,11 @@
     flex-flow: row wrap;
     gap: 10px;
     align-items: center;
-    justify-content: space-between;
-    margin: 0 100px;
+    justify-content: flex-start;
+  }
+  &_elem-container {
     padding-bottom: 60px;
+    margin: 0 100px;
     border-bottom: 1px solid #B3B3B3;
   }
   &_image {
@@ -149,8 +159,18 @@
 }
 
 //modale animations
+
+.spawn_right {
+  left: 100%;
+  transform: translateX(0);
+}
+.spawn_left {
+  left: -100%;
+  transform: translateX(0);
+}
+
 .translate_out {
-  transform: translateX(-100%);
+  transform: translateX(-150%);
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
   -ms-transform: translateX(-100%);
@@ -162,13 +182,14 @@
 }
 
 .translate_in {
-  transform: translateX(-250%);
-  -webkit-transform: translateX(-250%);
-  -moz-transform: translateX(-190%);
-  -ms-transform: translateX(-250%);
-  -o-transform: translateX(-250%);
-  -webkit-transition: -webkit-transform 0.6s ease-in-out; /* Changed here */
-  -moz-transition: -moz-transform 0.6s ease-in-out;
-  -o-transition: -o-transform 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  -webkit-transition: -webkit-transform 0.6s ease-in-out, left 0.6s ease-in-out;
+  -moz-transition: -moz-transform 0.6s ease-in-out, left 0.6s ease-in-out;
+  -o-transition: -o-transform 0.6s ease-in-out, left 0.6s ease-in-out;
+  transition: transform 0.6s ease-in-out, left 0.6s ease-in-out;
 }
