@@ -360,12 +360,14 @@ function createModale2(){
     const modale2InputLabel = document.createElement('label');
     modale2InputLabel.setAttribute('id', 'modale2InputLabel');
     modale2InputLabel.setAttribute('for', 'modale2PhotoInput');
+    modale2InputLabel.classList.add('modale2_photoLabel');
     modale2InputLabel.innerHTML = '<p>+ Ajouter photo</p>';
     const modale2ImageInputInp = document.createElement('input');
     modale2ImageInputInp.setAttribute('type', 'file');
     modale2ImageInputInp.setAttribute('id', 'modale2PhotoInput');
     const modale2ImageInputText = document.createElement('p');
-    modale2ImageInputText.innerHTML = 'jpg, png : 4mo max'
+    modale2ImageInputText.innerHTML = 'jpg, png : 4mo max';
+    modale2ImageInputText.setAttribute('id', 'modale2PhotoText');
    //input title
     const modale2InputContainerTitle = document.createElement('div');
     modale2InputContainerTitle.classList.add('inputContainer');
@@ -607,6 +609,11 @@ function previewPhoto() {
                 const reader = new FileReader();
                 reader.onload = function (event) {
                     imagePreview.src = event.target.result;
+                    imagePreview.classList.add('file');
+                    document.getElementById('modale2InputLabel').classList.add('fileSelected');
+                    document.getElementById('modale2PhotoInput').classList.add('fileSelected');
+                    document.getElementById('modale2PhotoText').classList.add('fileSelected');
+                    document.querySelector('.modale2-imageInputContainer').classList.add('fileSelectedContainer');
                 }
                 reader.readAsDataURL(file);
             }

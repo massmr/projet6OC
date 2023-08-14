@@ -185,9 +185,22 @@
     align-items: flex-start;
   }
   input[type='file'] {
-    //display: none;
+    display: none;
   }
-  #modale2InputLabel {
+  .fileSelectedContainer {
+    padding: 0;
+    height: 169px;
+    overflow: hidden;
+  }
+  .fileSelected {
+    display: none;
+  }
+  .file {
+    object-fit: cover;
+    width: calc(100% / 3.5);
+    height: 100%;
+  }
+  &2_photoLabel {
     display: flex;
     align-items: center;
     justify-content: center;

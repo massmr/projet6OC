@@ -273,7 +273,23 @@ footer nav ul {
   flex-direction: column;
   align-items: flex-start;
 }
-.modale #modale2InputLabel {
+.modale input[type=file] {
+  display: none;
+}
+.modale .fileSelectedContainer {
+  padding: 0;
+  height: 169px;
+  overflow: hidden;
+}
+.modale .fileSelected {
+  display: none;
+}
+.modale .file {
+  object-fit: cover;
+  width: 28.5714285714%;
+  height: 100%;
+}
+.modale2_photoLabel {
   display: flex;
   align-items: center;
   justify-content: center;
