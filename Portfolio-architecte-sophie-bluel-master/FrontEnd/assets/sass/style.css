@@ -273,9 +273,6 @@ footer nav ul {
   flex-direction: column;
   align-items: flex-start;
 }
-.modale input[type=file] {
-  display: none;
-}
 .modale #modale2InputLabel {
   display: flex;
   align-items: center;
@@ -288,6 +285,7 @@ footer nav ul {
   border-radius: 18px;
   margin-top: 15px;
   margin-bottom: 8px;
+  cursor: pointer;
 }
 .modale .modale2_Label {
   margin: 30px 0 20px 0;
@@ -300,6 +298,7 @@ footer nav ul {
   width: 100%;
   height: 51px;
   border: none;
+  cursor: text;
 }
 .modale2_border {
   padding-bottom: 60px;

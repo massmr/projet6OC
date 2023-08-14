@@ -359,11 +359,11 @@ function createModale2(){
     modale2ImageInputImg.setAttribute('id', 'photoPreview');
     const modale2InputLabel = document.createElement('label');
     modale2InputLabel.setAttribute('id', 'modale2InputLabel');
-    modale2InputLabel.setAttribute('for', 'modale2Input');
+    modale2InputLabel.setAttribute('for', 'modale2PhotoInput');
     modale2InputLabel.innerHTML = '<p>+ Ajouter photo</p>';
     const modale2ImageInputInp = document.createElement('input');
     modale2ImageInputInp.setAttribute('type', 'file');
-    modale2ImageInputInp.setAttribute('id', 'modale2Input');
+    modale2ImageInputInp.setAttribute('id', 'modale2PhotoInput');
     const modale2ImageInputText = document.createElement('p');
     modale2ImageInputText.innerHTML = 'jpg, png : 4mo max'
    //input title
@@ -448,6 +448,7 @@ function createModale2(){
     //slide to next >>> save, close and preview
     slideToNextModale();
     slideBackModale();
+    previewPhoto();
 }
 
 //___________||||||||||||||close modale|||||||||||||||||____________________________
@@ -592,3 +593,23 @@ function slideBackModale() {
 }
 
 //_____________||||||||Preview image in modale 2||||||||||||____________________
+
+function previewPhoto() {
+    const modale2PhotoInput= document.getElementById('modale2PhotoInput');
+    const imagePreview = document.getElementById('photoPreview');
+
+    if (modale2PhotoInput) {
+        console.log('elements IOT fire preview exist');
+        modale2PhotoInput.addEventListener('change', function() {
+            console.log('preview function fires');
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    imagePreview.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        })
+    }
+}
