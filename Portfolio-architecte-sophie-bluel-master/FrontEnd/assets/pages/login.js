@@ -26,6 +26,8 @@ if (logInForm) {
             if (response.ok) {
                 const result = await response.json();
                 if (result.userId && result.token) {
+                    //save token
+                    localStorage.setItem('userToken', result.token);
                     // Login successful => redirect
                     localStorage.setItem("logged", JSON.stringify({test: true}));
                     window.location.href = "./../../index.html";

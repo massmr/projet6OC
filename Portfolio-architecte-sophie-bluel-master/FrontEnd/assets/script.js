@@ -135,6 +135,7 @@ if (logoutButton) {
     logoutButton.addEventListener("click", function () {
         //clear logged data in local storage then reload page
         localStorage.removeItem("logged");
+        localStorage.removeItem('userToken');
         window.location.reload();
         createArticle(projects);
     });
@@ -221,6 +222,7 @@ async function createModaleAsync(el){
     const centerContainer = document.createElement("div");
     centerContainer.classList.add("center");
     centerContainer.setAttribute("id", "modale_center-container");
+    centerContainer.setAttribute('id', '1st_Modale');
     const modaleContainer = document.createElement("article");
     modaleContainer.classList.add("modale");
     if (spawnTester.state === false) {
@@ -319,12 +321,16 @@ function createModale2(){
     console.log("modale 2 complete, && spawnTester = " + spawnTester.state);
 
     //create modale 2
+    //Center
     const center2Container = document.createElement("div");
     center2Container.classList.add("center");
+    center2Container.setAttribute('id', '2nd_Modale');
+    //Container
     const modale2Container = document.createElement("article");
     modale2Container.classList.add("modale");
     modale2Container.classList.add("spawn_right");
     modale2Container.setAttribute("id", "modale_2")
+    //icons
     const modale2Arrow = document.createElement("i");
     modale2Arrow.classList.add("fa-solid");
     modale2Arrow.classList.add("fa-arrow-left");
@@ -337,31 +343,98 @@ function createModale2(){
     modale2Xmark.classList.add("top_right");
     modale2Xmark.classList.add("modale_icon");
     modale2Xmark.classList.add("modale_xmark");
+    //Title
     const modale2Title = document.createElement("h4");
     modale2Title.innerHTML = "Ajout photo";
-    const modale2ElemContainer = document.createElement("div");
-    modale2ElemContainer.classList.add("modale_elem-container");
-
-    //add image input
-    //add title input
-    //add category select
-
-    const modale2ButtonContainer = document.createElement("div");
-    modale2ButtonContainer.classList.add("button_modale-container");
+    const modale2Form = document.createElement("form");
+    modale2Form.classList.add('modale2-form')
+    modale2Form.setAttribute('action', '/upload');
+    modale2Form.setAttribute('method', 'post');
+    //Image downloader
+    const modale2ImageInputContainer = document.createElement('div');
+    modale2ImageInputContainer.classList.add('modale2-imageInputContainer');
+    const modale2ImageInputImg = document.createElement('img');
+    modale2ImageInputImg.classList.add('modale2-imageInputImg');
+    modale2ImageInputImg.setAttribute('src', 'assets/icons/image-svgrepo-com.svg');
+    modale2ImageInputImg.setAttribute('id', 'photoPreview');
+    const modale2InputLabel = document.createElement('label');
+    modale2InputLabel.setAttribute('id', 'modale2InputLabel');
+    modale2InputLabel.setAttribute('for', 'modale2Input');
+    modale2InputLabel.innerHTML = '<p>+ Ajouter photo</p>';
+    const modale2ImageInputInp = document.createElement('input');
+    modale2ImageInputInp.setAttribute('type', 'file');
+    modale2ImageInputInp.setAttribute('id', 'modale2Input');
+    const modale2ImageInputText = document.createElement('p');
+    modale2ImageInputText.innerHTML = 'jpg, png : 4mo max'
+   //input title
+    const modale2InputContainerTitle = document.createElement('div');
+    modale2InputContainerTitle.classList.add('inputContainer');
+    const modale2TitleInputLabel = document.createElement('label');
+    modale2TitleInputLabel.setAttribute('for', 'titleInput');
+    modale2TitleInputLabel.setAttribute('id', 'titleInputLabel');
+    modale2TitleInputLabel.classList.add('modale2_Label');
+    modale2TitleInputLabel.innerHTML = 'Titre';
+    const modale2TitleInput = document.createElement('input');
+    modale2TitleInput.setAttribute('type', 'text');
+    modale2TitleInput.setAttribute('id', 'titleInput')
+    modale2TitleInput.classList.add('modale2_form-box');
+    //input category
+    const modale2InputContainerSelect = document.createElement('div');
+    modale2InputContainerSelect.classList.add('inputContainer');
+    const modale2SelectLabel = document.createElement('label');
+    modale2SelectLabel.setAttribute('for', 'modale2Select');
+    modale2SelectLabel.setAttribute('id', 'modale2SlectLabel');
+    modale2SelectLabel.classList.add('modale2_Label');
+    modale2SelectLabel.innerHTML = 'Catégorie'
+    const modale2Select = document.createElement('select');
+    modale2Select.setAttribute('id', 'modale2Select')
+    modale2Select.classList.add('modale2_form-box');
+    modale2Select.setAttribute('name', 'chosenCategory');
+    const option0 = document.createElement('option');
+    const category1 = document.createElement('option');
+    category1.setAttribute('value', '1');
+    category1.innerHTML = ' Objets';
+    const category2 = document.createElement('option');
+    category2.setAttribute('value', '2');
+    category2.innerHTML = ' Appartements';
+    const category3 = document.createElement('option');
+    category3.setAttribute('value', '3');
+    category3.innerHTML = ' Hôtels & restaurants';
+    //border
+    const modale2Border = document.createElement('div');
+    modale2Border.classList.add('modale2_border');
+    //validation button
     const modale2ButtonValidate = document.createElement("button");
     modale2ButtonValidate.classList.add("button");
     modale2ButtonValidate.classList.add("button_Selected");
-    modale2ButtonValidate.classList.add("button_modale2")
+    modale2ButtonValidate.classList.add("button_modale")
     modale2ButtonValidate.innerHTML = "Valider";
+    modale2ButtonValidate.setAttribute('id', 'modale2_Button');
 
+    //append
     overlay.after(center2Container);
     center2Container.prepend(modale2Container);
     modale2Container.appendChild(modale2Arrow);
     modale2Container.appendChild(modale2Xmark);
     modale2Container.appendChild(modale2Title);
-    modale2Container.appendChild(modale2ElemContainer);
-    modale2Container.appendChild(modale2ButtonContainer);
-    modale2ButtonContainer.appendChild(modale2ButtonValidate);
+    modale2Container.appendChild(modale2Form);
+    modale2Form.appendChild(modale2ImageInputContainer);
+    modale2ImageInputContainer.appendChild(modale2ImageInputImg);
+    modale2ImageInputContainer.appendChild(modale2InputLabel);
+    modale2ImageInputContainer.appendChild(modale2ImageInputInp);
+    modale2ImageInputContainer.appendChild(modale2ImageInputText);
+    modale2Form.appendChild(modale2InputContainerTitle);
+    modale2InputContainerTitle.appendChild(modale2TitleInputLabel);
+    modale2InputContainerTitle.appendChild(modale2TitleInput);
+    modale2Form.appendChild(modale2InputContainerSelect);
+    modale2InputContainerSelect.appendChild(modale2SelectLabel);
+    modale2InputContainerSelect.appendChild(modale2Select);
+    modale2Select.appendChild(option0);
+    modale2Select.appendChild(category1);
+    modale2Select.appendChild(category2);
+    modale2Select.appendChild(category3);
+    modale2Form.appendChild(modale2Border);
+    modale2Form.appendChild(modale2ButtonValidate);
 
     console.log("All modale 2 constructions ended");
 
@@ -517,3 +590,5 @@ function slideBackModale() {
         }, 1000);
     })
 }
+
+//_____________||||||||Preview image in modale 2||||||||||||____________________

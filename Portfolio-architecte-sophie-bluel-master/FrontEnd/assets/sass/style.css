@@ -246,6 +246,72 @@ footer nav ul {
   transition: transform 100ms ease-in-out;
   transform: scale(1.02);
 }
+.modale2-form {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 100px;
+}
+.modale2-imageInputContainer {
+  background-color: #E8F1F6;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 0;
+  width: 100%;
+}
+.modale2-imageInputImg {
+  width: 58px;
+  height: 58px;
+}
+.modale .inputContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.modale input[type=file] {
+  display: none;
+}
+.modale #modale2InputLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 173px;
+  height: 36px;
+  background-color: #CBD6DC;
+  color: #306685;
+  border-radius: 18px;
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+.modale .modale2_Label {
+  margin: 30px 0 20px 0;
+  font-weight: 500;
+  font-size: 14px;
+  justify-content: flex-start;
+}
+.modale2_form-box {
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.0901960784);
+  width: 100%;
+  height: 51px;
+  border: none;
+}
+.modale2_border {
+  padding-bottom: 60px;
+  margin-bottom: 50px;
+  width: 100%;
+  border-bottom: 1px solid #B3B3B3;
+}
+.modale option, .modale #titleInput {
+  font-size: 14px;
+  font-weight: 400;
+  overflow: hidden;
+}
 
 .spawn_right {
   left: 100%;
@@ -381,7 +447,7 @@ del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
+fieldset, form, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
@@ -390,7 +456,6 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
 }
