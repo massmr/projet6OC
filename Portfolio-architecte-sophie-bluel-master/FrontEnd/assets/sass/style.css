@@ -266,6 +266,7 @@ footer nav ul {
 .modale2-imageInputImg {
   width: 58px;
   height: 58px;
+  filter: invert(75%);
 }
 .modale .inputContainer {
   width: 100%;
@@ -288,6 +289,7 @@ footer nav ul {
   object-fit: cover;
   width: 28.5714285714%;
   height: 100%;
+  filter: none;
 }
 .modale2_photoLabel {
   display: flex;

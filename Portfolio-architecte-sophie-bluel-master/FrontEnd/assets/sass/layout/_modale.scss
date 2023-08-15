@@ -177,6 +177,7 @@
   &2-imageInputImg {
     width: 58px;
     height: 58px;
+    filter: invert(75%);
   }
   .inputContainer {
     width: 100%;
@@ -199,6 +200,7 @@
     object-fit: cover;
     width: calc(100% / 3.5);
     height: 100%;
+    filter: none;
   }
   &2_photoLabel {
     display: flex;
