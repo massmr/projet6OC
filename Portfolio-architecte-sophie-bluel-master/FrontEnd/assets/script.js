@@ -380,12 +380,13 @@ function createModale2(){
     modale2TitleInput.setAttribute('type', 'text');
     modale2TitleInput.setAttribute('id', 'titleInput')
     modale2TitleInput.classList.add('modale2_form-box');
+    modale2TitleInput.setAttribute('required', '');
     //input category
     const modale2InputContainerSelect = document.createElement('div');
     modale2InputContainerSelect.classList.add('inputContainer');
     const modale2SelectLabel = document.createElement('label');
     modale2SelectLabel.setAttribute('for', 'modale2Select');
-    modale2SelectLabel.setAttribute('id', 'modale2SlectLabel');
+    modale2SelectLabel.setAttribute('id', 'modale2SelectLabel');
     modale2SelectLabel.classList.add('modale2_Label');
     modale2SelectLabel.innerHTML = 'Catégorie'
     const modale2Select = document.createElement('select');
@@ -439,6 +440,10 @@ function createModale2(){
     modale2Form.appendChild(modale2ButtonValidate);
 
     console.log("All modale 2 constructions ended");
+    if (!modale2Select.value) {
+        console.log('there is no value');
+    }
+    //console.log(modale2Select.value);
 
     //first slide_in
     setTimeout(() => {
@@ -451,6 +456,7 @@ function createModale2(){
     slideToNextModale();
     slideBackModale();
     previewPhoto();
+    activateButton();
 }
 
 //___________||||||||||||||close modale|||||||||||||||||____________________________
@@ -570,7 +576,6 @@ function slideBackModale() {
 
     //redclare DOM elem and target them
     const modale2Arrow = document.getElementById("modale_arrow");
-    //const modaleContainer = document.querySelector(".modale");
     const modale2Container = document.getElementById("modale_2");
     const centerContainer = document.querySelector(".center");
 
@@ -593,6 +598,36 @@ function slideBackModale() {
         }, 1000);
     })
 }
+//_____________||||||||modale2 button ON/OFF|||||||||___________________________
+function activateButton() {
+    const button = document.getElementById('modale2_Button');
+    const input = document.getElementById('titleInput');
+    const select = document.getElementById('modale2Select');
+    const file = document.getElementById('modale2PhotoInput');
+
+    //conditions IOT activate button
+    if (button) {
+        if (input.value && select.value && file.files[0]) {
+            button.classList.remove('button_notActive');
+            button.classList.add('button_Selected');
+        } else {
+            button.classList.add('button_notActive');
+            button.classList.remove('button_Selected');
+            button.disabled = true;
+        }
+    }
+
+    //recheck conditions for each change
+    file.addEventListener('change', function() {
+        activateButton();
+    })
+    input.addEventListener('change', function() {
+        activateButton();
+    })
+    select.addEventListener('change', function() {
+        activateButton();
+    })
+}
 
 //_____________||||||||Preview image in modale 2||||||||||||____________________
 
@@ -609,6 +644,7 @@ function previewPhoto() {
                 const reader = new FileReader();
                 reader.onload = function (event) {
                     imagePreview.src = event.target.result;
+                    //display only preview
                     imagePreview.classList.add('file');
                     document.getElementById('modale2InputLabel').classList.add('fileSelected');
                     document.getElementById('modale2PhotoInput').classList.add('fileSelected');
@@ -619,4 +655,13 @@ function previewPhoto() {
             }
         })
     }
+}
+
+//__________||||||||POST new project||||||||_______________________________________
+function postNewProject() {
+    const form = document.querySelector('.modale2-form');
+    const fileInput = document.getElementById('modale2PhotoInput');
+    const textInput = document.getElementById('titleInput').value;
+    const categorySelect = document.getElementById('modale2Select').value;
+
 }
