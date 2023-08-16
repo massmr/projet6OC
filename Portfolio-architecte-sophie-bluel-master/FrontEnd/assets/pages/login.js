@@ -28,6 +28,8 @@ if (logInForm) {
                 if (result.userId && result.token) {
                     //save token
                     localStorage.setItem('userToken', result.token);
+                    //save userId
+                    localStorage.setItem('userId', result.userId);
                     // Login successful => redirect
                     localStorage.setItem("logged", JSON.stringify({test: true}));
                     window.location.href = "./../../index.html";

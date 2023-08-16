@@ -14,9 +14,7 @@ else {
     projects = JSON.parse(projects);
 }
 
-console.log(projects);
-
-//counter to check if page was already charged IOT to activate first button in green
+//bool to check if page was already charged IOT to activate first button in green
 let alreadyLogged = false;
 
 //first call to create first project grid
@@ -201,7 +199,7 @@ if(modifyButton) {
         //always invoke with preview to prevent reinvoking wrong array after project deletion
         //preview = projects duplication
         createModaleAsync(preview).then(() => {
-            console.log("All modale construction and animation operations were successfull");
+            console.log("All modale 1 construction and animation operations were successfull");
         }).catch(error => {
             console.log("There was an error : ", error)
         });
@@ -211,7 +209,6 @@ if(modifyButton) {
 let spawnTester = {
     state: false,
 }
-console.log("spawnTester = " + spawnTester.state);
 
 //_____________||||||||||||||create 1st modale|||||||||||||____________________________________
 async function createModaleAsync(el){
@@ -227,11 +224,11 @@ async function createModaleAsync(el){
     modaleContainer.classList.add("modale");
     if (spawnTester.state === false) {
         modaleContainer.classList.add("spawn_right");
-        console.log("spawnTester = " + spawnTester.state + " >> modale has spawn right");
+        //console.log("spawnTester = " + spawnTester.state + " >> modale has spawn right");
     }
     if (spawnTester.state === true) {
         modaleContainer.classList.add("spawn_left");
-        console.log("spawnTester = " + spawnTester.state + " >> modale has spawn left");
+        //console.log("spawnTester = " + spawnTester.state + " >> modale has spawn left");
     }
     const modaleXmark = document.createElement("i");
     modaleXmark.classList.add("fa-solid");
@@ -250,6 +247,7 @@ async function createModaleAsync(el){
     modaleButtonAdd.classList.add("button");
     modaleButtonAdd.classList.add("button_Selected");
     modaleButtonAdd.classList.add("button_modale")
+    modaleButtonAdd.setAttribute('id', 'button_To-Next');
     modaleButtonAdd.innerHTML = "Ajouter une photo";
     const modaleButtonDelete = document.createElement("button");
     modaleButtonDelete.classList.add("button_delete");
@@ -299,13 +297,13 @@ async function createModaleAsync(el){
     }
 
     await createModaleGallery(preview);
-    console.log("All modale constructions ended");
+    //console.log("All modale constructions ended");
 
     //first slide_in
     setTimeout(() => {
         slideInModale(modaleContainer);
     }, 50);
-    console.log("modale \"translate\" animation ended");
+    //console.log("modale \"translate\" animation ended");
 
     closeModale(modaleXmark);
     deleteProjectModale(el);
@@ -318,7 +316,7 @@ async function createModaleAsync(el){
 function createModale2(){
     //modify spawnTester state IOT prepare for slideBack fct
     spawnTester.state = true;
-    console.log("modale 2 complete, && spawnTester = " + spawnTester.state);
+    console.log("All modale 2 construction and animation operations were successfull");
 
     //create modale 2
     //Center
@@ -410,9 +408,10 @@ function createModale2(){
     const modale2ButtonValidate = document.createElement("button");
     modale2ButtonValidate.classList.add("button");
     modale2ButtonValidate.classList.add("button_Selected");
-    modale2ButtonValidate.classList.add("button_modale")
+    modale2ButtonValidate.classList.add("button_modale");
     modale2ButtonValidate.innerHTML = "Valider";
     modale2ButtonValidate.setAttribute('id', 'modale2_Button');
+    modale2ButtonValidate.setAttribute('type', 'button');
 
     //append
     overlay.after(center2Container);
@@ -439,23 +438,16 @@ function createModale2(){
     modale2Form.appendChild(modale2Border);
     modale2Form.appendChild(modale2ButtonValidate);
 
-    console.log("All modale 2 constructions ended");
-    if (!modale2Select.value) {
-        console.log('there is no value');
-    }
-    //console.log(modale2Select.value);
-
     //first slide_in
     setTimeout(() => {
         slideInModale(modale2Container);
     }, 50);
-    console.log("modale \"translate-in\" animation ended");
 
     closeModale(modale2Xmark);
     //slide to next >>> save, close and preview
     slideToNextModale();
     slideBackModale();
-    previewPhoto();
+    newProjectPreview(preview);
     activateButton();
 }
 
@@ -467,9 +459,9 @@ function closeModale(el) {
     if(centerContainer) {
         el.addEventListener("click", function(event) {
             //check if event.target is in .xmark
-            if (event.target.classList.contains("modale_xmark")) {
+            if (event.target.classList.contains("modale_xmark") || event.target.classList.contains("button") ) {
                 closeEventModaleAsync();
-                console.log("All operations to closing modales were successfull");
+                console.log("All operations to close modales were successfull");
             }
 
             async function closeEventModaleAsync() {
@@ -488,6 +480,12 @@ function closeModale(el) {
                 const gallery = document.querySelector(".gallery");
                 gallery.innerHTML = "";
                 createArticle(preview);
+
+                //reset spawn tester
+                spawnTester.state = false;
+                //cleaer items in locale storage
+                localStorage.removeItem('items');
+                console.log('items in local storage = ' + localStorage.getItem('items'));
             }
         });
     }
@@ -495,9 +493,7 @@ function closeModale(el) {
 
 
 //________||||||||||||||||Delete projects||||||||||||||||___________________________
-//make new array to preview :
 const trash = [];
-//console.log(preview);
 
 //delete function : event listener on each trash icon
 //>> splice new Arr
@@ -519,7 +515,7 @@ function deleteProjectModale(el) {
             //rm old gallery
             const projectRemoved = document.getElementById("figure_" + (i + 1));
             projectRemoved.remove();
-            console.log("Project id : " + (i + 1) + " was deleted");
+            console.log("Project " + (i + 1) + " was deleted");
         })
     }
 }
@@ -559,7 +555,7 @@ function slideOutRightModale(el) {
 function slideToNextModale() {
 
     //declare button
-    const buttonToNextModale = document.querySelector(".button_modale");
+    const buttonToNextModale = document.getElementById('button_To-Next');
     const centerContainer = document.querySelector(".center");
 
     //add event listener click on button
@@ -613,7 +609,6 @@ function activateButton() {
         } else {
             button.classList.add('button_notActive');
             button.classList.remove('button_Selected');
-            button.disabled = true;
         }
     }
 
@@ -630,38 +625,110 @@ function activateButton() {
 }
 
 //_____________||||||||Preview image in modale 2||||||||||||____________________
+//create jsonData
+const jsonData = {
+    id: '',
+    title: '',
+    imageUrl: '',
+    categoryId: '',
+    userId: localStorage.getItem('userId'),
+}
 
-function previewPhoto() {
-    const modale2PhotoInput= document.getElementById('modale2PhotoInput');
-    const imagePreview = document.getElementById('photoPreview');
+let dataStored = false;
 
-    if (modale2PhotoInput) {
-        console.log('elements IOT fire preview exist');
-        modale2PhotoInput.addEventListener('change', function() {
+function newProjectPreview(el) {
+    const photo= document.getElementById('modale2PhotoInput');
+    const photoPreview = document.getElementById('photoPreview');
+    const input = document.getElementById('titleInput');
+    const select = document.getElementById('modale2Select');
+    const button = document.getElementById('modale2_Button');
+    let base64String = '';
+    jsonData.id = (el.length + 1);
+
+    //console.log(preview);
+    //console.log('jsonData' + localStorage.getItem('items'));
+
+    //1st condition : choose file and recall
+    if (photo) {
+        photo.addEventListener('change', function() {
             console.log('preview function fires');
             const file = this.files[0];
+
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (event) {
-                    imagePreview.src = event.target.result;
-                    //display only preview
-                    imagePreview.classList.add('file');
+                    //display preview
+                    photoPreview.src = event.target.result;
+                    photoPreview.classList.add('file');
                     document.getElementById('modale2InputLabel').classList.add('fileSelected');
                     document.getElementById('modale2PhotoInput').classList.add('fileSelected');
                     document.getElementById('modale2PhotoText').classList.add('fileSelected');
                     document.querySelector('.modale2-imageInputContainer').classList.add('fileSelectedContainer');
+
+                    //convert to base 64
+                    base64String = event.target.result;
+
+                    //update objects
+                    jsonData.imageUrl = base64String;
+
+                    checkNewProjectConditions();
                 }
                 reader.readAsDataURL(file);
             }
-        })
+        });
+    }
+
+    //2nd condition : fill in the blank and recall
+    if (input) {
+        input.addEventListener('change', function() {
+            //update objects
+            jsonData.title = input.value;
+            checkNewProjectConditions();
+        });
+    }
+
+    //3rd condition : fill in the blank and recall
+    if (select) {
+        select.addEventListener('change', function() {
+           //update objects
+           jsonData.categoryId = select.value;
+           checkNewProjectConditions();
+        });
+    }
+
+    function checkNewProjectConditions() {
+        if (dataStored) {
+            return;
+        }
+
+        //when all inputs are selected >> Store data
+        if (base64String !== '' && jsonData.title !== '' && jsonData.categoryId !== '') {
+            //button.addEventListener('click', function() {
+                dataStored = true;
+
+                //store jsonData :
+                let savedItems = JSON.parse(localStorage.getItem('items')) || [];
+                savedItems.push(jsonData);
+                localStorage.setItem('items', JSON.stringify(savedItems));
+                //console.log('jsonData new ' + localStorage.getItem('items'));
+
+                //push preview data
+                el.push(jsonData);
+                //console.log(el);
+
+                closeModale(button);
+                return;
+            //});
+        } else {
+            newProjectPreview(el);
+        }
     }
 }
 
 //__________||||||||POST new project||||||||_______________________________________
-function postNewProject() {
-    const form = document.querySelector('.modale2-form');
-    const fileInput = document.getElementById('modale2PhotoInput');
-    const textInput = document.getElementById('titleInput').value;
-    const categorySelect = document.getElementById('modale2Select').value;
-
-}
+//function postNewProject() {
+  //  const form = document.querySelector('.modale2-form');
+  // const fileInput = document.getElementById('modale2PhotoInput');
+  //  const textInput = document.getElementById('titleInput').value;
+  //  const categorySelect = document.getElementById('modale2Select').value;
+//}

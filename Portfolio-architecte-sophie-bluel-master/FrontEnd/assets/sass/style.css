@@ -595,6 +595,7 @@ input, button, a {
   border-radius: 60px;
   transition: all 300ms ease-in-out;
   cursor: default;
+  pointer-events: none;
 }
 
 .form {
