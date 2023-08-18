@@ -19,6 +19,7 @@ let alreadyLogged = false;
 
 //first call to create first project grid
 createArticle(projects);
+console.log(localStorage.getItem('userToken'));
 
 //Create Projects elements_________________________________________________________________________________
 function createArticle(el) {
@@ -363,6 +364,7 @@ function createModale2(){
     const modale2ImageInputInp = document.createElement('input');
     modale2ImageInputInp.setAttribute('type', 'file');
     modale2ImageInputInp.setAttribute('id', 'modale2PhotoInput');
+    modale2ImageInputInp.setAttribute('name', 'image');
     const modale2ImageInputText = document.createElement('p');
     modale2ImageInputText.innerHTML = 'jpg, png : 4mo max';
     modale2ImageInputText.setAttribute('id', 'modale2PhotoText');
@@ -483,9 +485,6 @@ function closeModale(el) {
 
                 //reset spawn tester
                 spawnTester.state = false;
-                //cleaer items in locale storage
-                localStorage.removeItem('items');
-                console.log('items in local storage = ' + localStorage.getItem('items'));
             }
         });
     }
@@ -630,7 +629,7 @@ const jsonData = {
     id: '',
     title: '',
     imageUrl: '',
-    categoryId: '',
+    category: '',
     userId: localStorage.getItem('userId'),
 }
 
@@ -691,7 +690,7 @@ function newProjectPreview(el) {
     if (select) {
         select.addEventListener('change', function() {
            //update objects
-           jsonData.categoryId = select.value;
+           jsonData.category = select.value;
            checkNewProjectConditions();
         });
     }
@@ -702,23 +701,21 @@ function newProjectPreview(el) {
         }
 
         //when all inputs are selected >> Store data
-        if (base64String !== '' && jsonData.title !== '' && jsonData.categoryId !== '') {
-            //button.addEventListener('click', function() {
-                dataStored = true;
+        if (base64String !== '' && jsonData.title !== '' && jsonData.category !== '') {
 
-                //store jsonData :
-                let savedItems = JSON.parse(localStorage.getItem('items')) || [];
-                savedItems.push(jsonData);
-                localStorage.setItem('items', JSON.stringify(savedItems));
-                //console.log('jsonData new ' + localStorage.getItem('items'));
+            dataStored = true;
 
-                //push preview data
-                el.push(jsonData);
-                //console.log(el);
+            //store jsonData :
+            let savedItems = JSON.parse(localStorage.getItem('items')) || [];
+            savedItems.push(jsonData);
+            localStorage.setItem('items', JSON.stringify(savedItems));
 
-                closeModale(button);
-                return;
-            //});
+            //push preview data
+            el.push(jsonData);
+
+            console.log(JSON.parse(localStorage.getItem('items'))[0]);
+            closeModale(button);
+
         } else {
             newProjectPreview(el);
         }
@@ -726,9 +723,87 @@ function newProjectPreview(el) {
 }
 
 //__________||||||||POST new project||||||||_______________________________________
-//function postNewProject() {
-  //  const form = document.querySelector('.modale2-form');
-  // const fileInput = document.getElementById('modale2PhotoInput');
-  //  const textInput = document.getElementById('titleInput').value;
-  //  const categorySelect = document.getElementById('modale2Select').value;
-//}
+
+//erase new project with instagram icon (dev purpose)
+const instagram = document.getElementById('instagram');
+instagram.addEventListener('click', function () {
+   localStorage.removeItem('items');
+   console.log('items removed');
+});
+
+//print new project
+console.log(JSON.parse(localStorage.getItem('items'))[0]);
+
+//POST when button is clicked
+const button = document.getElementById('saveButton');
+button.addEventListener('click', function(event) {
+    event.preventDefault();
+    postNewProject();
+});
+
+//New project logic
+function postNewProject() {
+
+    const data = JSON.parse(localStorage.getItem('items'));
+    const userToken = localStorage.getItem('userToken');
+    const url = `http://localhost:5678/api/works`;
+
+    const headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`,
+    });
+
+    fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data[0])
+    }).then( res => {
+        if (res.ok) {
+            return res.json();
+        } else {
+            throw new Error('No response');
+        }
+    }).then( data => {
+        console.log('post request successfull', data);
+        window.location.reload(true);
+    }).catch(error => {
+        console.error(error);
+    })
+}
+
+//Check data size
+
+const data = JSON.parse(localStorage.getItem('items'));
+function getJsonPayloadSizeInBytes(jsonObj) {
+    const jsonString = JSON.stringify(jsonObj);
+    let byteSize = 0;
+
+    // UTF-8 encoding
+    for (let i = 0; i < jsonString.length; i++) {
+        const charCode = jsonString.charCodeAt(i);
+
+        if (charCode <= 0x7F) {
+            byteSize += 1;
+        } else if (charCode <= 0x7FF) {
+            byteSize += 2;
+        } else if (charCode <= 0xFFFF) {
+            byteSize += 3;
+        } else {
+            byteSize += 4;
+        }
+    }
+
+    return byteSize;
+}
+
+//check data and token integrity
+
+let newPreview = projects.map(el => el);
+
+newPreview.push(data[0]);
+console.log(newPreview);
+
+
+
+
+
