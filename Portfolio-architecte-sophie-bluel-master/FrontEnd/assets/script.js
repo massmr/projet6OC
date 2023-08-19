@@ -3,23 +3,28 @@
 //GET API and save data in localStorage_______________________________________________________________
 let projects = window.localStorage.getItem('projects');
 
-if (projects === null) {
+async function fetchProjects() {
     const response = await fetch("http://localhost:5678/api/works");
     const projects = await response.json();
 
     const projectsObj = JSON.stringify(projects);
     window.localStorage.setItem("projects", projectsObj);
+    console.log('projects GET again');
+}
+
+if (projects === null) {
+    fetchProjects();
 }
 else {
     projects = JSON.parse(projects);
 }
+console.log(projects);
 
 //bool to check if page was already charged IOT to activate first button in green
 let alreadyLogged = false;
 
 //first call to create first project grid
 createArticle(projects);
-//console.log(localStorage.getItem('userToken'));
 
 //Create Projects elements_________________________________________________________________________________
 function createArticle(el) {
