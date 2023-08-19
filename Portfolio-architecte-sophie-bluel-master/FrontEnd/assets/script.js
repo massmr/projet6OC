@@ -10,6 +10,7 @@ async function fetchProjects() {
     const projectsObj = JSON.stringify(projects);
     window.localStorage.setItem("projects", projectsObj);
     console.log('projects GET again');
+    console.log(projects);
 }
 
 if (projects === null) {
@@ -18,7 +19,6 @@ if (projects === null) {
 else {
     projects = JSON.parse(projects);
 }
-console.log(projects);
 
 //bool to check if page was already charged IOT to activate first button in green
 let alreadyLogged = false;
@@ -468,7 +468,7 @@ function closeModale(el) {
             //check if event.target is in .xmark
             if (event.target.classList.contains("modale_xmark") || event.target.classList.contains("button") ) {
                 closeEventModaleAsync();
-                console.log("All operations to close modales were successfull");
+                //console.log("All operations to close modales were successfull");
             }
 
             async function closeEventModaleAsync() {
@@ -519,7 +519,7 @@ function deleteProjectModale(el) {
             //rm old gallery
             const projectRemoved = document.getElementById("figure_" + (i + 1));
             projectRemoved.remove();
-            console.log("Project " + (i + 1) + " was deleted");
+            console.log("Project " + (i + 1) + " was deletedm from preview");
         })
     }
 }
@@ -548,7 +548,7 @@ function slideOutLeftModale(el) {
 
     setTimeout(() => {
         el.remove();
-        console.log("Modale 1 was succesfully removed");
+        //console.log("Modale 1 was succesfully removed");
     }, 1000);
 }
 
@@ -588,7 +588,7 @@ function slideBackModale() {
         setTimeout(() => {
             //spawn tester to intial state after creation of modale 1
             spawnTester.state = false;
-            console.log("spawnTester = " + spawnTester + " >> initial state again");
+            //console.log("spawnTester = " + spawnTester + " >> initial state again");
         }, 1000);
         //rm 2nd modale && 1st center container bc remake
         //timeout to let play animation
@@ -788,7 +788,13 @@ function postNewProject() {
             }
         }).then(data => {
             console.log('post request successfull', data);
-            window.location.reload(true);
+            //GET projects updated
+            localStorage.removeItem('projects');
+            fetchProjects();
+            //recreate new gallery updated
+            const gallery = document.querySelector(".gallery");
+            gallery.innerHTML = "";
+            createArticle(projects);
         }).catch(error => {
             console.error(error);
         })

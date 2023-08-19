@@ -19,6 +19,7 @@ exports.create = async (req, res) => {
 			categoryId,
 			userId,
 		})
+		console.log('it is fucking working')
 		return res.status(201).json(work)
 	}catch (err) {
 		return res.status(500).json({ error: new Error('Something went wrong') })
