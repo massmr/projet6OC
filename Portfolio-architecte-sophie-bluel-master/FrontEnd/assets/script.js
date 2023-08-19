@@ -4,6 +4,9 @@
 let projects = window.localStorage.getItem('projects');
 
 async function fetchProjects() {
+    //rm potential items
+    localStorage.removeItem('projects');
+
     const response = await fetch("http://localhost:5678/api/works");
     const projects = await response.json();
 
@@ -189,6 +192,7 @@ for (let i = 1, numButton = 4; i < numButton + 1; ++i) {
 
 //All modale is made out of this array because it is only temporary and waits to be POSTed
 let preview = projects.map(el => el);
+//console.log(preview);
 
 //______________________|||||||create overlay && 1ST invoke||||||||____________________________
 
@@ -205,7 +209,7 @@ if(modifyButton) {
         //always invoke with preview to prevent reinvoking wrong array after project deletion
         //preview = projects duplication
         createModaleAsync(preview).then(() => {
-            console.log("All modale 1 construction and animation operations were successfull");
+            //console.log("All modale 1 construction and animation operations were successfull");
         }).catch(error => {
             console.log("There was an error : ", error)
         });
@@ -290,7 +294,7 @@ async function createModaleAsync(el){
             deleteIcon.classList.add("fa-solid");
             deleteIcon.classList.add("fa-trash-can");
             deleteIcon.classList.add("trash")
-            deleteIcon.id = ("trash_" + (i + 1));
+            deleteIcon.id = (`${el[i].id}`);
 
             modaleGallery.appendChild(modaleFigureContainer);
             modaleFigureContainer.appendChild(modaleFigure);
@@ -505,7 +509,7 @@ const trash = [];
 function deleteProjectModale(el) {
     for (let i = 0; i < el.length; ++i) {
         //ex : trash[0] == #trash_1; trash[1] == #trash_2 ...; trash[i] == #trash_(i + 1)
-        trash[i] = document.getElementById("trash_" + (i + 1) );
+        trash[i] = document.getElementById(`${el[i].id}` );
         trash[i].addEventListener("click", function() {
 
             //update preview[]
@@ -515,11 +519,16 @@ function deleteProjectModale(el) {
                 preview[j].id = (j + 1);
             }
 
+            //store draft id for further delete
+            const id = `${trash[i].id}`;
+            localStorage.setItem('deleteId', id);
+            console.log(localStorage.getItem('deleteId'));
+
             //update gallery :
             //rm old gallery
             const projectRemoved = document.getElementById("figure_" + (i + 1));
             projectRemoved.remove();
-            console.log("Project " + (i + 1) + " was deletedm from preview");
+            //console.log("Project " + (i + 1) + " was deleted from preview");
         })
     }
 }
@@ -732,7 +741,6 @@ function newProjectPreview(el) {
 //erase new project with instagram icon (dev purpose)
 const instagram = document.getElementById('instagram');
 instagram.addEventListener('click', function () {
-   localStorage.removeItem('items');
    console.log('items removed');
 });
 
@@ -742,7 +750,14 @@ instagram.addEventListener('click', function () {
 const button = document.getElementById('saveButton');
 button.addEventListener('click', function(event) {
     event.preventDefault();
-    postNewProject();
+    if (localStorage.getItem('items')) {
+        postNewProject();
+        localStorage.removeItem('items');
+    }
+    else if (localStorage.getItem('deleteId')) {
+        deleteProject();
+        localStorage.removeItem('deleteId');
+    }
 });
 
 //New project logic
@@ -789,15 +804,51 @@ function postNewProject() {
         }).then(data => {
             console.log('post request successfull', data);
             //GET projects updated
-            localStorage.removeItem('projects');
+            //localStorage.removeItem('projects');
             fetchProjects();
             //recreate new gallery updated
-            const gallery = document.querySelector(".gallery");
-            gallery.innerHTML = "";
-            createArticle(projects);
+            window.location.reload();
+            //const gallery = document.querySelector(".gallery");
+            //gallery.innerHTML = "";
+            //createArticle(projects);
         }).catch(error => {
             console.error(error);
         })
+    })
+}
+
+//_____________||||||||DELETE Project||||||||______________________________________________
+
+function deleteProject() {
+
+    const userToken = localStorage.getItem('userToken');
+    const id = localStorage.getItem('deleteId');
+    const url = 'http://localhost:5678/api/works/' + id;
+
+    const headers = new Headers({
+        //'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`,
+    });
+
+    fetch(url, {
+        method: 'DELETE',
+        headers: headers,
+    }).then( res => {
+        if (res.status === 204) {
+            console.log('DELETE request successfull');
+            //localStorage.removeItem('deleteId');
+            fetchProjects();
+            //localStorage.removeItem('items');
+            window.location.reload();
+            //recreate new gallery updated
+            //const gallery = document.querySelector(".gallery");
+            //gallery.innerHTML = "";
+            //createArticle(projects);
+        } else if (!res.ok) {
+            throw new Error('No response');
+        }
+    }).catch(error => {
+        console.log(error);
     })
 }
 
