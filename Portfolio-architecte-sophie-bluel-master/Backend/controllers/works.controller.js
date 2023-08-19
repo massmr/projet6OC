@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
 			title,
 			imageUrl,
 			categoryId,
-			userId
+			userId,
 		})
 		return res.status(201).json(work)
 	}catch (err) {

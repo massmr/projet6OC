@@ -19,7 +19,7 @@ let alreadyLogged = false;
 
 //first call to create first project grid
 createArticle(projects);
-console.log(localStorage.getItem('userToken'));
+//console.log(localStorage.getItem('userToken'));
 
 //Create Projects elements_________________________________________________________________________________
 function createArticle(el) {
@@ -731,8 +731,7 @@ instagram.addEventListener('click', function () {
    console.log('items removed');
 });
 
-//print new project
-console.log(JSON.parse(localStorage.getItem('items'))[0]);
+//console.log(JSON.parse(localStorage.getItem('items'))[0].imageUrl);
 
 //POST when button is clicked
 const button = document.getElementById('saveButton');
@@ -744,64 +743,52 @@ button.addEventListener('click', function(event) {
 //New project logic
 function postNewProject() {
 
-    const data = JSON.parse(localStorage.getItem('items'));
     const userToken = localStorage.getItem('userToken');
     const url = `http://localhost:5678/api/works`;
 
     const headers = new Headers({
-        'Content-Type': 'application/json',
+        //'Content-Type': 'application/json',
         'Authorization': `Bearer ${userToken}`,
     });
 
-    fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(data[0])
-    }).then( res => {
-        if (res.ok) {
-            return res.json();
-        } else {
-            throw new Error('No response');
-        }
-    }).then( data => {
-        console.log('post request successfull', data);
-        window.location.reload(true);
-    }).catch(error => {
-        console.error(error);
+    //prepare file for multer config
+    const encodedData = JSON.parse(localStorage.getItem('items'))[0];
+    const mimeType = encodedData.imageUrl.split(':')[1].split(';')[0];
+    const typeMimeType = mimeType.split('/')[1];
+    const base64Image = encodedData.imageUrl;
+    //Convert Base64 to Blob
+    let fetchImage = async (base64) => {
+        const response = await fetch(base64);
+        const blob = await response.blob();
+        return new File([blob], `${encodedData.title}.${typeMimeType}`, { type: `${mimeType}` });
+    };
+    //Create formData
+    const formData = new FormData();
+    formData.append('title', encodedData.title);
+    formData.append('category', encodedData.category);
+    formData.append('id', encodedData.id);
+    formData.append('userId', localStorage.getItem('userId'));
+    fetchImage(base64Image).then(file => {
+        formData.append('image', file, `${encodedData.title}.${typeMimeType}`);
+
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: formData
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error('No response');
+            }
+        }).then(data => {
+            console.log('post request successfull', data);
+            window.location.reload(true);
+        }).catch(error => {
+            console.error(error);
+        })
     })
 }
-
-//Check data size
-
-const data = JSON.parse(localStorage.getItem('items'));
-function getJsonPayloadSizeInBytes(jsonObj) {
-    const jsonString = JSON.stringify(jsonObj);
-    let byteSize = 0;
-
-    // UTF-8 encoding
-    for (let i = 0; i < jsonString.length; i++) {
-        const charCode = jsonString.charCodeAt(i);
-
-        if (charCode <= 0x7F) {
-            byteSize += 1;
-        } else if (charCode <= 0x7FF) {
-            byteSize += 2;
-        } else if (charCode <= 0xFFFF) {
-            byteSize += 3;
-        } else {
-            byteSize += 4;
-        }
-    }
-
-    return byteSize;
-}
-
-//check data and token integrity
-
-let newPreview = projects.map(el => el);
-
-newPreview.push(data[0]);
-console.log(newPreview);
 
 
 
